@@ -16,8 +16,7 @@
  */
 
 #include "validation/impl/stateful_validator_impl.hpp"
-#include <numeric>
-#include <set>
+#include "backend/protobuf/from_old_model.hpp"
 #include "model/account.hpp"
 
 namespace iroha {
@@ -53,7 +52,8 @@ namespace iroha {
       // Filter only valid transactions
       auto filter = [&temporaryWsv, checking_transaction](auto &acc,
                                                           const auto &tx) {
-        auto answer = temporaryWsv.apply(tx, checking_transaction);
+        auto transaction = shared_model::proto::from_old(tx);
+        auto answer = temporaryWsv.apply(transaction, checking_transaction);
         if (answer) {
           acc.push_back(tx);
         }
