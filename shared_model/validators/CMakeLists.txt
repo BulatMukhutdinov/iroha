@@ -21,3 +21,6 @@ target_link_libraries(shared_model_stateless_validation
         schema
         model_interfaces
         )
+
+
+add_library(block_validator block_validator.cpp)
